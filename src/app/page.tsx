@@ -1,66 +1,117 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+import styles from "../styles/homePage.module.css";
+import { Header } from "../components/Header";
+import { ArrowRight, Brain, TrendingUp, Zap, Shield } from "lucide-react";
+import { FeatureCard } from "../components/FeatureCard";
+import { BookCard } from "../components/BookCard";
+import { books } from "../../data/mockData";
+import { Footer } from "../components/Footer";
 
+const mockUser = {
+  id: 123,
+  name: 'Test',
+  session: true,
+};
+
+const features = [
+    {
+      icon: Brain,
+      title: 'AI-Powered Recommendations',
+      description: 'Our intelligent algorithm learns from your favorites to suggest books perfectly matched to your taste.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Personalized Experience',
+      description: 'The more you favorite, the better our recommendations become. Your profile evolves with your reading journey.',
+    },
+    {
+      icon: Zap,
+      title: 'Instant Discovery',
+      description: 'Browse thousands of books across 15+ categories with advanced search and filtering.',
+    },
+    {
+      icon: Shield,
+      title: 'Privacy First',
+      description: 'All your data is stored locally in your browser. We respect your privacy and reading preferences.',
+    },
+]
 export default function Home() {
+
+  const subsetBooks = books.slice(0,7)
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Header user={mockUser}/>
+      <div className={styles.page}>
+
+          {/* Hero Section*/}
+          <section className={styles.main}>
+            <div className={styles.container}>
+              <div className={styles.hero}>
+                <h1>Discover Your Next Great Read</h1>
+                <p>Browse thousands of books and get AI-powered recommendations based on your favorites</p>
+                <div className={styles.heroButton}>
+                  <Link href={'/browse'} className={styles.ctaButton}>
+                      Browse Books
+                      <ArrowRight />
+                  </Link>
+                  {!mockUser.session && (
+                    <Link href={'/login'} className={styles.ctaButton}>
+                      Sign In
+                      <ArrowRight />
+                  </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Features Section - Only show for non-logged in users */}
+          {!mockUser.session && (
+            <section className={styles.section}>
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.sectionTitle}>Why Choose InkStack</h2>
+                <p className={styles.sectionSubtitle}>Intelligent book discovery powered by AI</p>
+              </div>
+              <div className={styles.featuresGrid}>
+                {features.map((feature) => (
+                  <FeatureCard key={feature.title} {...feature} />
+                ))}
+              </div>
+            </section> 
+          )}
+
+          {/* AI Recommendations Section - Only show if user is logged in and has favorites */}
+
+          {/* Featured Books Section */}
+          <section className={styles.section}>
+            <div>
+              <h2 className={styles.sectionTitle}>Popular Books</h2>
+              <p className={styles.sectionSubtitle}>Trending titles everyone is reading</p>
+            </div>
+            <div className={styles.bookGrid}>
+              {/* FIX ME - Map through Books and display as Grid*/}
+              {subsetBooks.map((book) => (
+                <Link key={book.id} href={`/book/${book.id}`}>
+                  <BookCard book={book} />
+                </Link>
+              ))}
+            </div>
+            <div className={styles.featureCTA}>
+              <Link className={styles.feautreLink}href={'/browse'}>
+                View All Books
+                <ArrowRight />
+              </Link>
+            </div>
+          </section>
+
+          {/* Call to Action for Non-logged in Users */}
+
+          {/* Footer Component*/}
+          <Footer />
+          
+      </div>
+    </>
   );
 }
