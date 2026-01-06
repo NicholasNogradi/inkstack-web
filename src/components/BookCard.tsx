@@ -4,9 +4,27 @@ import { ShoppingCart, Heart } from "lucide-react";
 import Image from "next/image";
 import styles from '../styles/bookcard.module.css'
 
-export const BookCard = ({book}) => {
+interface Book {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  coverImageUrl: string;
+  price: number;
+  categoryIds: string[];
+  popularity: number;
+  publishedYear: number;
+}
 
-    const addToCart = (e) => {
+interface BookCardProps {
+  book: Book;
+}
+
+
+
+export const BookCard = ({book}: BookCardProps) => {
+
+    const addToCart = (e: { preventDefault: () => void; stopPropagation: () => void; }) => {
         e.preventDefault();
         e.stopPropagation();
         console.log("Added to Cart")
