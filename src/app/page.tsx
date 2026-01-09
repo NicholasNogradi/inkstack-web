@@ -1,17 +1,12 @@
 import Link from "next/link";
 import styles from "../styles/homePage.module.css";
-import { Header } from "../components/Header";
 import { ArrowRight, Brain, TrendingUp, Zap, Shield } from "lucide-react";
 import { FeatureCard } from "../components/FeatureCard";
 import { BookCard } from "../components/BookCard";
 import { books } from "../../data/mockData";
 import { Footer } from "../components/Footer";
+import { mockUser } from "./layout";
 
-const mockUser = {
-  id: 123,
-  name: 'Test',
-  session: true,
-};
 
 const features = [
     {
@@ -42,7 +37,6 @@ export default function Home() {
 
   return (
     <>
-      <Header user={mockUser}/>
       <div className={styles.page}>
 
           {/* Hero Section*/}
@@ -106,11 +100,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Call to Action for Non-logged in Users */}
-
-          {/* Footer Component*/}
-          <Footer />
-          
+          {/* Call to Action for Non-logged in Users */}          
       </div>
     </>
   );

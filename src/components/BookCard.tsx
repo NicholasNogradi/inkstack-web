@@ -4,61 +4,82 @@ import { ShoppingCart, Heart } from "lucide-react";
 import Image from "next/image";
 import styles from '../styles/bookcard.module.css'
 
+interface Category {
+    id: string;
+    name: string;
+}
+
 interface Book {
   id: string;
   title: string;
   author: string;
-  description: string;
-  coverImageUrl: string;
+  description: string | null;
+  coverImage: string;
   price: number;
-  categoryIds: string[];
-  popularity: number;
-  publishedYear: number;
+  categories: Category[];
 }
 
 interface BookCardProps {
   book: Book;
 }
 
-
-
 export const BookCard = ({book}: BookCardProps) => {
+    // Debug logging
+    console.log('Book object:', book);
+    console.log('Cover image:', book?.coverImage);
+    console.log('Cover image type:', typeof book?.coverImage);
 
     const addToCart = (e: { preventDefault: () => void; stopPropagation: () => void; }) => {
         e.preventDefault();
         e.stopPropagation();
         console.log("Added to Cart")
     }
+
+    const displayCategories = book?.categories ? book.categories.slice(0, 3) : [];
+    
+    // Ensure coverImage is a valid string
+    const coverImage = book?.coverImage && typeof book.coverImage === 'string' 
+        ? book.coverImage 
+        : '/placeholder-book.jpg';
+
     return (
         <div className={styles.bookCard}>
             <div className={styles.imageContainer}>
-                {/*Image and Heart/Favorite Button */}
-                <Image 
-                    src={book.coverImageUrl}
-                    alt={book.title}
-                    className={styles.image}
-                    width={100}
-                    height={100}
-                />
+                {/* Conditional rendering to prevent errors */}
+                {coverImage && coverImage !== '/placeholder-book.jpg' ? (
+                    <Image
+                        src={coverImage}
+                        alt={book?.title || 'Book cover'}
+                        className={styles.image}
+                        width={200}
+                        height={300}
+                        unoptimized
+                    />
+                ) : (
+                    <div className={styles.imagePlaceholder}>
+                        <p>No Image</p>
+                    </div>
+                )}
             </div>
 
              <div className={styles.content}>
                 <div className={styles.titleSection}>
-                    {/* title section*/}
-                    <h3 className={styles.title}>{book.title}</h3>
-                    <p className={styles.author}>{book.author}</p>
+                    <h3 className={styles.title}>{book?.title}</h3>
+                    <p className={styles.author}>{book?.author}</p>
                 </div>
 
                 <div className={styles.categories}>
-                    {/* Badge section  <= 3 badges */}
-                    <span>{book.categoryIds[0]}</span>
-                    <br/>
-                    <span>{book.categoryIds[1]}</span>
+                    {displayCategories.map((category) => (
+                        <span key={category.id} className={styles.badge}>
+                            {category.name}
+                        </span>
+                    ))}
                 </div>
 
                 <div className={styles.footer}>
-                    {/*Price of book and add to cart  */}
-                    <span className={styles.price}>${book.price}</span>
+                    <span className={styles.price}>
+                        ${book?.price ? book.price.toFixed(2) : '0.00'}
+                    </span>
                     <button className={styles.addButton} onClick={addToCart}>
                         <ShoppingCart />
                         Add

@@ -1,0 +1,248 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 15px;
+  padding: 25px;
+}
+
+.booksGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-2)
+}
+
+.filterSort {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter,
+.sort {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.filter label,
+.sort label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  text-transform: capitalize;
+}
+
+.filter select,
+.sort select {
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #ffffff;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.filter select:hover,
+.sort select:hover {
+  border-color: #9ca3af;
+}
+
+.filter select:focus,
+.sort select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter select option,
+.sort select option {
+  padding: 0.5rem;
+}
+
+.searchContainer {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  color: #1f2937;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.searchInput:hover {
+  border-color: #9ca3af;
+}
+
+.searchInput:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.paginationContainer {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.paginationBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #374151;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 2.5rem;
+}
+
+.paginationBtn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.paginationBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+}
+
+.paginationBtn:disabled {
+  color: #9ca3af;
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.paginationBtn.active {
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.paginationBtn.active:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.prevNextBtn {
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+}
+
+/* Alternative style - numbered buttons only */
+.pageNumber {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .paginationContainer {
+    gap: 0.375rem;
+  }
+
+  .paginationBtn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    min-width: 2rem;
+  }
+
+  .prevNextBtn {
+    padding: 0.375rem 1rem;
+  }
+
+  .pageNumber {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .searchContainer {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .filterSort {
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  .filter,
+  .sort {
+    width: 100%;
+  }
+}
+

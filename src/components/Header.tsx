@@ -1,15 +1,11 @@
 import Link from "next/link"
-import { BookOpen, Home, BookMarked, Heart, ShoppingCart, User } from 'lucide-react'
+import { BookOpen, Home, BookMarked, Heart, ShoppingCart, User, LogIn } from 'lucide-react'
 import style from "../styles/header.module.css"
+import type { UserType } from "../types/types"
 
-const navLinks = [
-    { to: '/', label: 'Home', icon: Home },
-    { to: '/browse', label: 'Browse', icon: BookMarked },
-    { to: '/favorites', label: 'Favorites', icon: Heart },
 
-];
 
-export const Header = ({user}) => {
+export const Header = (user: UserType) => {
     return (
         <header className={style.container}>
             <div className={style.headerContent}>
@@ -20,24 +16,40 @@ export const Header = ({user}) => {
                     </Link>
 
                     <nav className={style.navigation}>
-                        {navLinks.map((link) => {
-                            const Icon = link.icon
-                            return (
-                                <Link key={link.to} href={link.to} className={style.navLink}>
-                                    <Icon />
-                                    {link.label}
-                                </Link>
-                            )
-                        })}
+                        <Link href={'/'} className={style.navLink}>
+                            <Home />
+                            Home
+                        </Link>
+                        <Link href={'/browse'} className={style.navLink}>
+                            <BookMarked />
+                            Browse
+                        </Link>
+                        {user.session && (
+                            <Link  href={'/favorites'} className={style.navLink}>
+                                <Heart />
+                                Favorites
+                            </Link>
+                        )}
                     </nav>
                 </div>
                 <div className={style.rightSection}>
-                    <Link href={'/cart'} className={style.iconLink}>
-                        <ShoppingCart />
-                    </Link>
-                    <Link href={'/profile'} className={style.iconLink}>
-                        <User />
-                    </Link>
+                    {user.session ? (
+                        <div className={style.rightSectionLinks}>
+                            <Link href={'/cart'} className={style.iconLink}>
+                                <ShoppingCart />
+                            </Link>
+                            <Link href={'/profile'} className={style.iconLink}>
+                                <User />
+                            </Link>
+                        </div>
+
+                    ) : (
+                        <div className={style.rightSectionLinks}>
+                            <Link href={'/login'}>
+                                <LogIn className={style.iconLink}/>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

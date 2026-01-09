@@ -14,7 +14,7 @@
 
 .imageContainer {
   position: relative;
-  
+  height: 250px;
   overflow: hidden;
   background-color: var(--color-muted);
 }
